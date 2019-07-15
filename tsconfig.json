@@ -15,5 +15,5 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["src", "src/index.tsx"]
+  "include": ["src", "src/index.tsx", "src/front/store/types/index.ts"]
 }
