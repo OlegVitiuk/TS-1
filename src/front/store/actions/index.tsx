@@ -1,24 +1,15 @@
 import {
-  ChatActionTypes,
-  DELETE_MESSAGE,
-  Message,
-  SEND_MESSAGE
+  Auth,
+  AuthActionTypes,
+  AUTHENTICATE,
+  AUTHENTICATION_FAILED,
+  AUTHENTICATION_SUCCESSFUL
 } from "../types";
 
 // TypeScript infers that this function is returning SendMessageAction
-export function sendMessage(newMessage: Message): ChatActionTypes {
+export function authenticate(authData: Auth): AuthActionTypes {
   return {
-    type: SEND_MESSAGE,
-    payload: newMessage
-  };
-}
-
-// TypeScript infers that this function is returning DeleteMessageAction
-export function deleteMessage(timestamp: number): ChatActionTypes {
-  return {
-    type: DELETE_MESSAGE,
-    meta: {
-      timestamp
-    }
+    type: AUTHENTICATE,
+    payload: authData
   };
 }
