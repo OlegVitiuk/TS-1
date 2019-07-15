@@ -1,3 +1,15 @@
+# ReachGoals
+
+[![Travis][build-badge]][build]
+[![Coveralls][coveralls-badge]][coveralls]
+
+Awesome factory line manager!
+
+[build-badge]: https://img.shields.io/travis/OlegVitiuk/PetProject/master.png?style=flat-square
+[build]: https://travis-ci.org/OlegVitiuk/PetProject
+[coveralls-badge]: https://img.shields.io/coveralls/OlegVitiuk/PetProject/master.png?style=flat-square
+[coveralls]: https://coveralls.io/github/OlegVitiuk/PetProject
+
 ## Available Scripts
 
 In the project directory, you can run:
