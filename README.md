@@ -3,8 +3,6 @@
 [![Travis][build-badge]][build]
 [![Coveralls][coveralls-badge]][coveralls]
 
-Awesome factory line manager!
-
 [build-badge]: https://img.shields.io/travis/OlegVitiuk/PetProject/master.png?style=flat-square
 [build]: https://travis-ci.org/OlegVitiuk/PetProject
 
