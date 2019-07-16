@@ -6,8 +6,6 @@
 [build-badge]: https://img.shields.io/travis/OlegVitiuk/PetProject/master.png?style=flat-square
 [build]: https://travis-ci.org/OlegVitiuk/PetProject
 
-[![Coverage Status](https://coveralls.io/repos/github/OlegVitiuk/PetProject/badge.svg?branch=master)](https://coveralls.io/github/OlegVitiuk/PetProject?branch=master)
-
 ## Available Scripts
 
 In the project directory, you can run:

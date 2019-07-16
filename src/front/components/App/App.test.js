@@ -1,15 +1,12 @@
 import React from 'react';
 import { configure, shallow } from 'enzyme';
-import { expect } from 'chai';
+import ReactDOM from 'react-dom';
 import App from '.';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-describe('App component testing', function() {
-  it('renders welcome message', function() {
-    const wrapper = shallow(<App />);
-
-    expect(wrapper.exists('.App-header')).to.equal(true);
-  });
+it('renders without crashing', () => {
+  const wrapper = shallow(<App />);
+  expect(wrapper.length).toEqual(1);
 });
