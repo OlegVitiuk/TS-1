@@ -1,12 +1,12 @@
+import SignIn from "front/components/SignIn";
 import React from "react";
-import CharacterList from "../СharacterList";
+import { BrowserRouter as Router } from "react-router-dom";
 import styles from "./app.module.scss";
 
 const App: React.SFC = () => {
   return (
     <div className={styles.App}>
-      <header className={styles.App_header}>header app</header>
-      <CharacterList />
+      <SignIn />
     </div>
   );
 };

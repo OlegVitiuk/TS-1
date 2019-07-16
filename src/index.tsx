@@ -13,6 +13,7 @@ import { Store } from "redux";
 import { getAllCharacters } from "front/actions/CharacterActions";
 import configureStore, { IAppState } from "front/store";
 
+import "antd/dist/antd.css";
 import App from "front/components/App";
 import "./index.css";
 
