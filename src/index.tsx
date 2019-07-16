@@ -9,8 +9,6 @@ import { Provider } from "react-redux";
 // Store type from Redux
 import { Store } from "redux";
 
-// Import the store function and state
-import { getAllCharacters } from "front/actions/CharacterActions";
 import configureStore, { IAppState } from "front/store";
 
 import "antd/dist/antd.css";
@@ -35,7 +33,6 @@ const Root: React.SFC<IProps> = props => {
 
 // Generate the store
 const store = configureStore();
-store.dispatch(getAllCharacters());
 
 // Render the App
 ReactDOM.render(<Root store={store} />, document.getElementById(

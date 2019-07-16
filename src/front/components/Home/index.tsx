@@ -9,9 +9,9 @@ interface IProps {}
 
 interface IState {}
 
-class Pay extends React.Component<IProps, IState> {
+class Home extends React.Component<IProps, IState> {
   public render() {
-    return <div>Pay PAGE</div>;
+    return <div>HOME PAGE</div>;
   }
 }
 
@@ -20,4 +20,4 @@ const mapStateToProps = (store: IAppState) => {
   return {};
 };
 
-export default connect(mapStateToProps)(Pay);
+export default connect(mapStateToProps)(Home);
