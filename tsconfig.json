@@ -16,5 +16,5 @@
     "jsx": "preserve",
     "baseUrl": "src"
   },
-  "include": ["src", "src/index.tsx", "src/front/store/types/index.ts"]
+  "include": ["src/*", "src/index.tsx", "src/front/store/types/index.ts"]
 }
