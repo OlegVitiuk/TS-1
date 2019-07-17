@@ -6,16 +6,12 @@
  */
 // Import reducers and state type
 import { authReducer, IAuthState } from "reducers/authReducer";
-import {
-  characterReducer,
-  ICharacterState
-} from "reducers/characterReducer";
+import { characterReducer, ICharacterState } from "reducers/characterReducer";
 import { applyMiddleware, combineReducers, createStore, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-/*  Thunk
-Redux Thunk middleware allows you to write action creators that return a function instead of an action. The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met. The inner function receives the store methods dispatch and getState as parameters.
-*/
-import thunk from "redux-thunk";
+import { AppActions } from "types/actions";
+
+import thunk, { ThunkMiddleware } from "redux-thunk";
 
 // Create an interface for the application state
 export interface IAppState {
@@ -34,7 +30,9 @@ export default function configureStore(): Store<IAppState, any> {
   const store = createStore(
     rootReducer,
     undefined,
-    composeWithDevTools(applyMiddleware(thunk))
+    composeWithDevTools(
+      applyMiddleware(thunk as ThunkMiddleware<IAppState, AppActions>)
+    )
   );
   return store;
 }
