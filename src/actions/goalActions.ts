@@ -1,28 +1,32 @@
-import { string } from "prop-types";
-import { ActionCreator, Dispatch } from "redux";
-import { IAppState } from "store";
-import { AppActions } from "types/actions";
+import { Dispatch } from "redux";
+import { AppState } from "store";
+import {
+  ADD_GOAL,
+  EDIT_GOAL,
+  GoalActionTypes,
+  REMOVE_GOAL
+} from "types/actions";
 import { IGoal } from "types/goal";
 import uuidv4 from "uuid/v4";
 
-export const addGoal = (goal: IGoal): AppActions => ({
-  type: "ADD_GOAL",
+export const addGoal = (goal: IGoal): GoalActionTypes => ({
+  type: ADD_GOAL,
   goal
 });
 
-export const removeGoal = (id: string): AppActions => ({
-  type: "REMOVE_GOAL",
+export const removeGoal = (id: string): GoalActionTypes => ({
+  type: REMOVE_GOAL,
   id
 });
 
-export const editGoal = (goal: IGoal): AppActions => ({
-  type: "EDIT_GOAL",
+export const editGoal = (goal: IGoal): GoalActionTypes => ({
+  type: EDIT_GOAL,
   goal
 });
 
 export const startAddGoal = (goal: IGoal) => (
-  dispatch: Dispatch<AppActions>,
-  getState: () => IAppState
+  dispatch: Dispatch<GoalActionTypes>,
+  getState: () => AppState
 ) =>
   dispatch(
     addGoal({
@@ -32,11 +36,11 @@ export const startAddGoal = (goal: IGoal) => (
   );
 
 export const startRemoveGoal = (id: string) => (
-  dispatch: Dispatch<AppActions>,
-  getState: () => IAppState
+  dispatch: Dispatch<GoalActionTypes>,
+  getState: () => AppState
 ) => dispatch(removeGoal(id));
 
 export const startEditGoal = (goal: IGoal) => (
-  dispatch: Dispatch<AppActions>,
-  getState: () => IAppState
+  dispatch: Dispatch<GoalActionTypes>,
+  getState: () => AppState
 ) => dispatch(editGoal(goal));

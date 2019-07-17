@@ -4,3 +4,7 @@ export interface IGoal {
   price: number;
   id: string;
 }
+
+export interface IGoalState {
+  goalsData: IGoal[];
+}

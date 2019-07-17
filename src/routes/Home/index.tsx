@@ -4,8 +4,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { IAppState } from "store";
-import { AppActions } from "types/actions";
+import { AppState } from "store";
+import { GoalActionTypes } from "types/actions";
 import { IGoal } from "types/goal";
 import styles from "./home.module.scss";
 
@@ -72,7 +72,7 @@ class Home extends React.Component<Props, State> {
 // const mapStateToProps = (store: IAppState) => ;
 
 interface LinkStateProps {
-  goals: IGoal[];
+  goalsData: IGoal[];
 }
 
 interface LinkDispatchProps {
@@ -81,8 +81,10 @@ interface LinkDispatchProps {
 }
 
 export default connect(
-  (state: IAppState): LinkStateProps => ({ goals: state.goals }),
-  (dispatch: ThunkDispatch<any, any, AppActions>): LinkDispatchProps => ({
+  (state: AppState): LinkStateProps => ({
+    goalsData: state.goalState.goalsData
+  }),
+  (dispatch: ThunkDispatch<any, any, GoalActionTypes>): LinkDispatchProps => ({
     startAddGoal: bindActionCreators(startAddGoal, dispatch),
     startRemoveGoal: bindActionCreators(startRemoveGoal, dispatch)
   })

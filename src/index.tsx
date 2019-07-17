@@ -8,14 +8,14 @@ import { Provider } from "react-redux";
 // Store type from Redux
 import { Store } from "redux";
 
-import configureStore, { IAppState } from "store";
+import configureStore, { AppState } from "store";
 
 import "antd/dist/antd.css";
 import App from "components/App";
 import "./index.css";
 
 interface IProps {
-  store: Store<IAppState>;
+  store: Store<AppState>;
 }
 
 /* 

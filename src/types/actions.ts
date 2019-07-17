@@ -12,28 +12,36 @@ export const PAYMENT_FAILED = "PAYMENT_FAILED";
 export const ADD_GOAL = "ADD_GOAL";
 export const REMOVE_GOAL = "REMOVE_GOAL";
 export const EDIT_GOAL = "EDIT_GOAL";
+export const GET_GOAL = "GET_GOAL";
 
 // authActions
-export interface AuthSuccessfulAction {
+interface AuthSuccessfulAction {
   type: typeof AUTH_SUCCESSFUL;
 }
 
 // goals actions
-export interface AddGoalAction {
+interface AddGoalAction {
   type: typeof ADD_GOAL;
   goal: IGoal;
 }
 
-export interface RemoveGoalAction {
+interface RemoveGoalAction {
   type: typeof REMOVE_GOAL;
   id: string;
 }
 
-export interface EditGoalAction {
+interface EditGoalAction {
   type: typeof EDIT_GOAL;
   goal: IGoal;
 }
 
-export type GoalActionTypes = AddGoalAction | RemoveGoalAction | EditGoalAction;
+interface GetGoalAction {
+  type: typeof GET_GOAL;
+  goalsData: IGoal[];
+}
 
-export type AppActions = GoalActionTypes;
+export type GoalActionTypes =
+  | AddGoalAction
+  | RemoveGoalAction
+  | EditGoalAction
+  | GetGoalAction;

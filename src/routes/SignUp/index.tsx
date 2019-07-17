@@ -1,8 +1,8 @@
 import { Button, Checkbox, Form, Icon, Input } from "antd";
 import { FormComponentProps } from "antd/lib/form";
-import { IAppState } from "store";
 import * as React from "react";
 import { connect } from "react-redux";
+import { AppState } from "store";
 import styles from "./signUp.module.scss";
 
 interface UserFormProps extends FormComponentProps {}
@@ -87,7 +87,7 @@ class SignUp extends React.Component<UserFormProps, any> {
 }
 
 // Grab the characters from the store and make them available on props
-const mapStateToProps = (store: IAppState) => {
+const mapStateToProps = (store: AppState) => {
   return {};
 };
 

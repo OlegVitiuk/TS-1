@@ -1,36 +1,31 @@
 import { Reducer } from "redux";
 import { GoalActionTypes } from "types/actions";
-import { IGoal } from "types/goal";
+import { IGoalState } from "types/goal";
 
-export interface IGoalState {
-  readonly goalsData: IGoal[];
-}
-
-// Define the initial state
 const initialCharacterState: IGoalState = {
   goalsData: []
 };
 
-export const goalReducer: Reducer<IGoalState, GoalActionTypes> = (
+export function goalReducer(
   state = initialCharacterState,
-  action
-) => {
+  action: GoalActionTypes
+): IGoalState {
   switch (action.type) {
-    case "ADD_GOAL":
-      return [...state.goalsData, action.goal];
-    case "REMOVE_GOAL":
-      return state.goalsData.filter(({ id }) => id !== action.id);
-    case "EDIT_GOAL":
-      return state.goalsData.map(goal => {
-        if (goal.id === action.goal.id) {
-          return {
-            ...goal,
-            ...action.goal
-          };
-        }
-        return goal;
-      });
+    // case "ADD_GOAL":
+    //   return [...state.goalsData, action.goal];
+    // case "REMOVE_GOAL":
+    //   return state.goalsData.filter(({ id }) => id !== action.id);
+    // case "EDIT_GOAL":
+    //   return state.goalsData.map(goal => {
+    //     if (goal.id === action.goal.id) {
+    //       return {
+    //         ...goal,
+    //         ...action.goal
+    //       };
+    //     }
+    //     return goal;
+    //   });
     default:
       return state;
   }
-};
+}
