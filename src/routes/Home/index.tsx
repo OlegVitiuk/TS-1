@@ -1,23 +1,89 @@
-import { Button, Checkbox, Form, Icon, Input } from "antd";
-import { FormComponentProps } from "antd/lib/form";
-import { IAppState } from "store";
+import { startAddGoal, startRemoveGoal } from "actions/goalActions";
+import { Avatar, Input, List, Skeleton } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
-import styles from "./signUp.module.scss";
+import { bindActionCreators } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { IAppState } from "store";
+import { AppActions } from "types/actions";
+import { IGoal } from "types/goal";
+import styles from "./home.module.scss";
 
-interface IProps {}
+const { Search } = Input;
 
-interface IState {}
+interface HomePageProps {
+  goalsData: IGoal[];
+}
 
-class Home extends React.Component<IProps, IState> {
+interface HomePageState {}
+
+type Props = HomePageProps & LinkDispatchProps;
+type State = HomePageState & LinkStateProps;
+
+class Home extends React.Component<Props, State> {
   public render() {
-    return <div>HOME PAGE</div>;
+    const { goalsData } = this.props;
+
+    return (
+      <div className={styles.homeWrapper}>
+        <h1 className={styles.homeHeader}>Add a goal</h1>
+        <div className={styles.goalsContainer}>
+          <Search
+            placeholder="Enter your goal"
+            enterButton="Add"
+            size="large"
+            onClick={this.processGoal}
+          />
+          <List
+            className="demo-loadmore-list"
+            itemLayout="horizontal"
+            dataSource={goalsData}
+            renderItem={(item: any) => (
+              <List.Item actions={[<a>Edit</a>, <a>Delete</a>]}>
+                <Skeleton avatar={true} title={false} active={true}>
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    }
+                    title={<a href="https://ant.design">{item.name.last}</a>}
+                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  />
+                  <div>content</div>
+                </Skeleton>
+              </List.Item>
+            )}
+          />
+        </div>
+      </div>
+    );
+  }
+  private processGoal() {
+    const { startAddGoal } = this.props;
+
+    startAddGoal({
+      name: "test",
+      paid: false,
+      price: 100,
+      id: "1231"
+    });
   }
 }
 
-// Grab the characters from the store and make them available on props
-const mapStateToProps = (store: IAppState) => {
-  return {};
-};
+// const mapStateToProps = (store: IAppState) => ;
 
-export default connect(mapStateToProps)(Home);
+interface LinkStateProps {
+  goals: IGoal[];
+}
+
+interface LinkDispatchProps {
+  startAddGoal: (goal: IGoal) => void;
+  startRemoveGoal: (id: string) => void;
+}
+
+export default connect(
+  (state: IAppState): LinkStateProps => ({ goals: state.goals }),
+  (dispatch: ThunkDispatch<any, any, AppActions>): LinkDispatchProps => ({
+    startAddGoal: bindActionCreators(startAddGoal, dispatch),
+    startRemoveGoal: bindActionCreators(startRemoveGoal, dispatch)
+  })
+)(Home);

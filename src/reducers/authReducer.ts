@@ -4,9 +4,9 @@ import { Reducer } from "redux";
 
 // Define the AuthState type
 export interface IAuthState {
-  isAuthenticated: boolean;
-  token: string;
-  errorMessage: string;
+  readonly isAuthenticated: boolean;
+  readonly token: string;
+  readonly errorMessage: string;
 }
 
 // Define the initial state

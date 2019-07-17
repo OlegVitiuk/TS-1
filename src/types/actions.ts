@@ -30,7 +30,7 @@ export interface RemoveGoalAction {
 }
 
 export interface EditGoalAction {
-  type: typeof REMOVE_GOAL;
+  type: typeof EDIT_GOAL;
   goal: IGoal;
 }
 

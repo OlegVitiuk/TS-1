@@ -1,0 +1,19 @@
+.homeWrapper {
+  display: flex;
+  max-width: 500px;
+  margin: 50px auto 20px;
+  padding: 5px;
+  justify-content: center;
+  align-items: middle;
+  flex-direction: column;
+}
+
+.goalsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.homeHeader {
+  margin-bottom: 10px;
+  text-align: center;
+}

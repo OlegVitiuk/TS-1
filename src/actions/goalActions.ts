@@ -1,3 +1,4 @@
+import { string } from "prop-types";
 import { ActionCreator, Dispatch } from "redux";
 import { IAppState } from "store";
 import { AppActions } from "types/actions";
@@ -26,7 +27,7 @@ export const startAddGoal = (goal: IGoal) => (
   dispatch(
     addGoal({
       id: uuidv4(),
-      goal
+      ...goal
     })
   );
 

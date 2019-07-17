@@ -1,28 +1,20 @@
-/*  Imports from Redux:
- applyMiddleware: Applies middleware to the dispatch method of the Redux store
- combineReducers: Merges reducers into one
- createStore: Creates a Redux store that holds the state tree
- Store: The TS Type used for the store, or state tree
- */
-// Import reducers and state type
 import { authReducer, IAuthState } from "reducers/authReducer";
-import { characterReducer, ICharacterState } from "reducers/characterReducer";
+import { goalReducer, IGoalState } from "reducers/goalReducer";
 import { applyMiddleware, combineReducers, createStore, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { AppActions } from "types/actions";
 
 import thunk, { ThunkMiddleware } from "redux-thunk";
 
-// Create an interface for the application state
 export interface IAppState {
-  authState: IAuthState;
-  characterState: ICharacterState;
+  readonly authState: IAuthState;
+  readonly goalState: IGoalState;
 }
 
 // Create the root reducer
 const rootReducer = combineReducers<IAppState>({
   authState: authReducer,
-  characterState: characterReducer
+  goalState: goalReducer
 });
 
 // Create a configure store function of type `IAppState`
