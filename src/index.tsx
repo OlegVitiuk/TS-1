@@ -1,4 +1,3 @@
-import * as serviceWorker from "front/serviceWorker";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
@@ -9,10 +8,10 @@ import { Provider } from "react-redux";
 // Store type from Redux
 import { Store } from "redux";
 
-import configureStore, { IAppState } from "front/store";
+import configureStore, { IAppState } from "store";
 
 import "antd/dist/antd.css";
-import App from "front/components/App";
+import App from "components/App";
 import "./index.css";
 
 interface IProps {
@@ -38,5 +37,3 @@ const store = configureStore();
 ReactDOM.render(<Root store={store} />, document.getElementById(
   "root"
 ) as HTMLElement);
-
-serviceWorker.unregister();

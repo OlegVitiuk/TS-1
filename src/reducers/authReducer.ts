@@ -1,5 +1,5 @@
 // Import Reducer type
-import { AuthActions, AuthActionTypes } from "front/actions/authActions";
+import { AuthActions, AuthActionTypes } from "actions/authActions";
 import { Reducer } from "redux";
 
 // Define the AuthState type

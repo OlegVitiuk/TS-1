@@ -1,7 +1,7 @@
-import Home from "front/components/Home";
-import Pay from "front/components/Pay";
-import SignIn from "front/components/SignIn";
-import SignUp from "front/components/SignUp";
+import Home from "components/Home";
+import Pay from "components/Pay";
+import SignIn from "components/SignIn";
+import SignUp from "components/SignUp";
 import React from "react";
 import {
   BrowserRouter as Router,

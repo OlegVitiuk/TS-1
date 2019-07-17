@@ -1,13 +1,13 @@
 import { Button, Checkbox, Form, Icon, Input } from "antd";
 import { FormComponentProps } from "antd/lib/form";
-import { IAppState } from "front/store";
+import { IAppState } from "store";
 import * as React from "react";
 import { connect } from "react-redux";
-import styles from "./signUp.module.scss";
+import styles from "./signIn.module.scss";
 
 interface UserFormProps extends FormComponentProps {}
 
-class SignUp extends React.Component<UserFormProps, any> {
+class SignIn extends React.Component<UserFormProps, any> {
   public handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -22,7 +22,7 @@ class SignUp extends React.Component<UserFormProps, any> {
     return (
       <div className={styles.signInWrapper}>
         <Form onSubmit={this.handleSubmit} className={styles.signInForm}>
-          <h1>Sign Up</h1>
+          <h1>Sign In</h1>
           <Form.Item>
             {getFieldDecorator("username", {
               rules: [
@@ -41,24 +41,6 @@ class SignUp extends React.Component<UserFormProps, any> {
             {getFieldDecorator("password", {
               rules: [
                 { required: true, message: "Please input your Password!" }
-              ]
-            })(
-              <Input
-                prefix={
-                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                }
-                type="password"
-                placeholder="Password"
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            {getFieldDecorator("password", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please confirm your Password!"
-                }
               ]
             })(
               <Input
@@ -92,5 +74,5 @@ const mapStateToProps = (store: IAppState) => {
 };
 
 export default connect(mapStateToProps)(
-  Form.create<UserFormProps>({ name: "sign-up" })(SignUp)
+  Form.create<UserFormProps>({ name: "sign-in" })(SignIn)
 );

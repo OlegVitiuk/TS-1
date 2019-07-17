@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { ICharacter } from "front/reducers/characterReducer";
-import { IAppState } from "front/store";
+import { ICharacter } from "reducers/characterReducer";
+import { IAppState } from "store";
 
 // Create the containers interface
 interface IProps {

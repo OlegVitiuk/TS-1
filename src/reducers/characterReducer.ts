@@ -2,7 +2,7 @@
 import {
   CharacterActions,
   CharacterActionTypes
-} from "front/actions/CharacterActions";
+} from "actions/CharacterActions";
 import { Reducer } from "redux";
 
 // Define the Character type

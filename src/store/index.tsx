@@ -5,11 +5,11 @@
  Store: The TS Type used for the store, or state tree
  */
 // Import reducers and state type
-import { authReducer, IAuthState } from "front/reducers/authReducer";
+import { authReducer, IAuthState } from "reducers/authReducer";
 import {
   characterReducer,
   ICharacterState
-} from "front/reducers/characterReducer";
+} from "reducers/characterReducer";
 import { applyMiddleware, combineReducers, createStore, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 /*  Thunk
