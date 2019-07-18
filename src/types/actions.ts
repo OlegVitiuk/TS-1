@@ -11,7 +11,6 @@ export const PAYMENT_FAILED = "PAYMENT_FAILED";
 // creating goals
 export const ADD_GOAL = "ADD_GOAL";
 export const REMOVE_GOAL = "REMOVE_GOAL";
-export const EDIT_GOAL = "EDIT_GOAL";
 export const GET_GOAL = "GET_GOAL";
 
 // authActions
@@ -30,18 +29,9 @@ interface RemoveGoalAction {
   id: string;
 }
 
-interface EditGoalAction {
-  type: typeof EDIT_GOAL;
-  goal: IGoal;
-}
-
 interface GetGoalAction {
   type: typeof GET_GOAL;
   goalsData: IGoal[];
 }
 
-export type GoalActionTypes =
-  | AddGoalAction
-  | RemoveGoalAction
-  | EditGoalAction
-  | GetGoalAction;
+export type GoalActionTypes = AddGoalAction | RemoveGoalAction | GetGoalAction;

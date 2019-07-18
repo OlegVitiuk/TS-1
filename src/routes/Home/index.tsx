@@ -1,8 +1,9 @@
-import { startAddGoal, startRemoveGoal } from "actions/goalActions";
+import { addGoal, startRemoveGoal } from "actions/goalActions";
 import { Avatar, Input, List, Skeleton } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { bindActionCreators, compose } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "store";
 import { GoalActionTypes } from "types/actions";
@@ -65,9 +66,9 @@ class Home extends React.Component<Props, State> {
     );
   }
   private processGoal = (): void => {
-    const { startAddGoal } = this.props;
+    const { addGoal } = this.props;
 
-    startAddGoal({
+    addGoal({
       name: "test",
       paid: false,
       price: 100,
@@ -89,16 +90,21 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  startAddGoal: (goal: IGoal) => void;
+  addGoal: (goal: IGoal) => void;
   startRemoveGoal: (id: string) => void;
 }
 
-export default connect(
-  (state: AppState): LinkStateProps => ({
-    goalsData: state.goalData
-  }),
-  (dispatch: ThunkDispatch<any, any, GoalActionTypes>): LinkDispatchProps => ({
-    startAddGoal: bindActionCreators(startAddGoal, dispatch),
-    startRemoveGoal: bindActionCreators(startRemoveGoal, dispatch)
-  })
+export default compose<any>(
+  connect(
+    (state: AppState): LinkStateProps => ({
+      goalsData: state.goalData
+    }),
+    (
+      dispatch: ThunkDispatch<any, any, GoalActionTypes>
+    ): LinkDispatchProps => ({
+      addGoal: bindActionCreators(addGoal, dispatch),
+      startRemoveGoal: bindActionCreators(startRemoveGoal, dispatch)
+    })
+  ),
+  firestoreConnect([{ collection: "Goals" }])
 )(Home);
