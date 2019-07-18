@@ -1,30 +1,27 @@
-import { authReducer, IAuthState } from "reducers/authReducer";
+import { getFirebase } from "react-redux-firebase";
+import { authReducer } from "reducers/authReducer";
 import { goalReducer } from "reducers/goalReducer";
 import { applyMiddleware, combineReducers, createStore, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { IGoalState } from "types/goal";
+import { getFirestore } from "redux-firestore";
 
 import thunk from "redux-thunk";
 
-// export interface IAppState {
-//   readonly authState: IAuthState;
-//   readonly goalState: IGoalState;
-// }
-
 // Create the root reducer
 const rootReducer = combineReducers({
-  authState: authReducer,
-  goalState: goalReducer
+  auth: authReducer,
+  goalData: goalReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
 
-// Create a configure store function of type `IAppState`
 export default function configureStore(): Store<AppState> {
   const store = createStore(
     rootReducer,
     undefined,
-    composeWithDevTools(applyMiddleware(thunk))
+    composeWithDevTools(
+      applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore }))
+    )
   );
   return store;
 }

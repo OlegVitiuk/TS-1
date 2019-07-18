@@ -44,3 +44,19 @@ export const startEditGoal = (goal: IGoal) => (
   dispatch: Dispatch<GoalActionTypes>,
   getState: () => AppState
 ) => dispatch(editGoal(goal));
+
+// export const getAllCharacters: ActionCreator<
+//   ThunkAction<Promise<any>, ICharacterState, null, ICharacterGetAllAction>
+// > = () => {
+//   return async (dispatch: Dispatch) => {
+//     try {
+//       const response = await axios.get("https://swapi.co/api/people/");
+//       dispatch({
+//         characters: response.data.results,
+//         type: CharacterActionTypes.GET_ALL
+//       });
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
+// };

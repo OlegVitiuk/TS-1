@@ -31,15 +31,22 @@ class Home extends React.Component<Props, State> {
           <Search
             placeholder="Enter your goal"
             enterButton="Add"
+            allowClear={true}
             size="large"
-            onClick={this.processGoal}
+            onSearch={this.processGoal}
           />
           <List
             className="demo-loadmore-list"
             itemLayout="horizontal"
             dataSource={goalsData}
-            renderItem={(item: any) => (
-              <List.Item actions={[<a>Edit</a>, <a>Delete</a>]}>
+            renderItem={(item: any, index: number) => (
+              <List.Item
+                actions={[
+                  <a key={index} onClick={() => this.deleteGoal(item.id)}>
+                    Delete
+                  </a>
+                ]}
+              >
                 <Skeleton avatar={true} title={false} active={true}>
                   <List.Item.Meta
                     avatar={
@@ -57,7 +64,7 @@ class Home extends React.Component<Props, State> {
       </div>
     );
   }
-  private processGoal() {
+  private processGoal = (): void => {
     const { startAddGoal } = this.props;
 
     startAddGoal({
@@ -66,7 +73,13 @@ class Home extends React.Component<Props, State> {
       price: 100,
       id: "1231"
     });
-  }
+  };
+
+  private deleteGoal = (id: string): void => {
+    const { startRemoveGoal } = this.props;
+
+    startRemoveGoal(id);
+  };
 }
 
 // const mapStateToProps = (store: IAppState) => ;
@@ -82,7 +95,7 @@ interface LinkDispatchProps {
 
 export default connect(
   (state: AppState): LinkStateProps => ({
-    goalsData: state.goalState.goalsData
+    goalsData: state.goalData
   }),
   (dispatch: ThunkDispatch<any, any, GoalActionTypes>): LinkDispatchProps => ({
     startAddGoal: bindActionCreators(startAddGoal, dispatch),
