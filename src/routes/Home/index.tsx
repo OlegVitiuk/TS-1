@@ -1,5 +1,5 @@
-import { addGoal, startRemoveGoal } from "actions/goalActions";
-import { Avatar, Input, List, Skeleton } from "antd";
+import { addGoal, removeGoal } from "actions/goalActions";
+import { Icon, Input, List, Spin, Tag } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -8,6 +8,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "store";
 import { GoalActionTypes } from "types/actions";
 import { IGoal } from "types/goal";
+import uuidv4 from "uuid/v4";
 import styles from "./home.module.scss";
 
 const { Search } = Input;
@@ -27,8 +28,8 @@ class Home extends React.Component<Props, State> {
 
     return (
       <div className={styles.homeWrapper}>
-        <h1 className={styles.homeHeader}>Add a goal</h1>
-        <div className={styles.goalsContainer}>
+        <div className={styles.goalsHeader}>
+          <h1 className={styles.homeHeader}>Add a goal</h1>
           <Search
             placeholder="Enter your goal"
             enterButton="Add"
@@ -36,54 +37,50 @@ class Home extends React.Component<Props, State> {
             size="large"
             onSearch={this.processGoal}
           />
-          <List
-            className="demo-loadmore-list"
-            itemLayout="horizontal"
-            dataSource={goalsData}
-            renderItem={(item: any, index: number) => (
-              <List.Item
-                actions={[
-                  <a key={index} onClick={() => this.deleteGoal(item.id)}>
-                    Delete
-                  </a>
-                ]}
-              >
-                <Skeleton avatar={true} title={false} active={true}>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.name.last}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+        </div>
+        <div className={styles.goalsContainer}>
+          {goalsData ? (
+            goalsData.map(goal => (
+              <div className={styles.goalCard} key={goal.id}>
+                <div className={styles.goalHeader}>
+                  <span className={styles.goalName}>{goal.name}</span>
+                  <Tag key={goal.id + 1} color={goal.paid ? "green" : "red"}>
+                    {goal.paid ? "paid" : "not paid"}
+                  </Tag>
+                  <Icon
+                    type="delete"
+                    onClick={() => this.deleteGoal(goal.id)}
+                    className={styles.deleteIcon}
                   />
-                  <div>content</div>
-                </Skeleton>
-              </List.Item>
-            )}
-          />
+                </div>
+                <Icon type="down-circle" className={styles.more} />
+              </div>
+            ))
+          ) : (
+            <Spin size="large" />
+          )}
         </div>
       </div>
     );
   }
-  private processGoal = (): void => {
+
+  private processGoal = (value: string): void => {
     const { addGoal } = this.props;
 
     addGoal({
-      name: "test",
+      name: value,
       paid: false,
       price: 100,
-      id: "1231"
+      id: uuidv4()
     });
   };
 
   private deleteGoal = (id: string): void => {
-    const { startRemoveGoal } = this.props;
+    const { removeGoal } = this.props;
 
-    startRemoveGoal(id);
+    removeGoal(id);
   };
 }
-
-// const mapStateToProps = (store: IAppState) => ;
 
 interface LinkStateProps {
   goalsData: IGoal[];
@@ -91,19 +88,19 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   addGoal: (goal: IGoal) => void;
-  startRemoveGoal: (id: string) => void;
+  removeGoal: (id: string) => void;
 }
 
 export default compose<any>(
   connect(
     (state: AppState): LinkStateProps => ({
-      goalsData: state.goalData
+      goalsData: state.firestore.ordered.Goals
     }),
     (
       dispatch: ThunkDispatch<any, any, GoalActionTypes>
     ): LinkDispatchProps => ({
       addGoal: bindActionCreators(addGoal, dispatch),
-      startRemoveGoal: bindActionCreators(startRemoveGoal, dispatch)
+      removeGoal: bindActionCreators(removeGoal, dispatch)
     })
   ),
   firestoreConnect([{ collection: "Goals" }])

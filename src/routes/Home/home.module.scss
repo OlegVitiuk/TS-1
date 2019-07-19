@@ -1,19 +1,66 @@
 .homeWrapper {
   display: flex;
-  max-width: 500px;
   margin: 50px auto 20px;
-  padding: 5px;
+  padding: 5px 20px;
+  width: 100%;
   justify-content: center;
-  align-items: middle;
+  align-items: center;
   flex-direction: column;
 }
 
 .goalsContainer {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.goalsHeader {
+  width: 400px;
 }
 
 .homeHeader {
   margin-bottom: 10px;
   text-align: center;
+}
+
+.goalName {
+  font-family: 'Inconsolata';
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.styledListItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deleteIcon {
+  color: #ff4136;
+}
+
+.goalCard {
+  margin: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid Maroon;
+  border-radius: 7px;
+  min-height: 80px;
+  padding: 5px;
+  justify-content: space-between;
+}
+.goalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    margin-right: auto;
+  }
+}
+
+.more {
+  color: maroon;
+  font-size: 20px;
 }
