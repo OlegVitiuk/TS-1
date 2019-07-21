@@ -2,7 +2,6 @@ import firebase from "config/fbConfig";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { Store } from "redux";
 import { createFirestoreInstance } from "redux-firestore";
 
@@ -19,13 +18,6 @@ interface IProps {
 // Generate the store
 const store = configureStore();
 
-const rrfProps = {
-  firebase,
-  config: {},
-  dispatch: store.dispatch,
-  createFirestoreInstance
-};
-
 /* 
 Create a root component that receives the store via props
 and wraps the App component with Provider, giving props to containers
@@ -33,9 +25,7 @@ and wraps the App component with Provider, giving props to containers
 const Root: React.SFC<IProps> = props => {
   return (
     <Provider store={props.store}>
-      <ReactReduxFirebaseProvider {...rrfProps}>
-        <App />
-      </ReactReduxFirebaseProvider>
+      <App />
     </Provider>
   );
 };

@@ -24,17 +24,22 @@ class SignUp extends React.Component<UserFormProps, any> {
       <div className={styles.signInWrapper}>
         <Form onSubmit={this.handleSubmit} className={styles.signInForm}>
           <h1>Sign Up</h1>
+
           <Form.Item>
-            {getFieldDecorator("username", {
+            {getFieldDecorator("email", {
               rules: [
-                { required: true, message: "Please input your username!" }
+                { required: true, message: "Please input your email!" },
+                {
+                  type: "email",
+                  message: "The input is not valid email!"
+                }
               ]
             })(
               <Input
                 prefix={
                   <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                 }
-                placeholder="Username"
+                placeholder="Email"
               />
             )}
           </Form.Item>

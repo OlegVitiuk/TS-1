@@ -1,7 +1,6 @@
 import { Action, ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { IGoal } from "types/goal";
-import { useFirebase } from "react-redux-firebase";
 import { LOGIN_SUCCESS, LOGIN_FAILED } from "types/actions";
 
 export const signIn: ActionCreator<
@@ -10,17 +9,21 @@ export const signIn: ActionCreator<
   return async (
     dispatch: Dispatch<Action>,
     getState: any,
-    { useFirebase }: any
+    { getFirebase }: any
   ) => {
     try {
-      const firebase = useFirebase();
+      console.log(creds, "creds");
+      const firebase = getFirebase();
       const { email, password } = creds;
 
-      await firebase.auth.signInWithEmailAndPassword(email, password);
+      console.log(firebase, "sfdasd");
+
+      await firebase.auth().signInWithEmailAndPassword(email, password);
       dispatch({
         type: LOGIN_SUCCESS
       });
     } catch (err) {
+      console.log(err, "err");
       dispatch({
         type: LOGIN_FAILED,
         err
