@@ -6,5 +6,5 @@ export interface IGoal {
 }
 
 export interface IGoalState {
-  goalsData: IGoal[];
+  [index: string]: IGoal;
 }

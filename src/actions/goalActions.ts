@@ -1,15 +1,9 @@
-import Firebase from "firebase";
-import { useFirebase } from "react-redux-firebase";
 import { Action, ActionCreator, Dispatch } from "redux";
-import { getFirestore } from "redux-firestore";
 import { ThunkAction } from "redux-thunk";
-import { AppState } from "store";
-import { ADD_GOAL, GoalActionTypes, REMOVE_GOAL } from "types/actions";
 import { IGoal } from "types/goal";
-import uuidv4 from "uuid/v4";
 
 export const addGoal: ActionCreator<
-  ThunkAction<Promise<any>, IGoal, null, GoalActionTypes>
+  ThunkAction<Promise<any>, IGoal, null, Action>
 > = goal => {
   return async (
     dispatch: Dispatch<Action>,
@@ -21,11 +15,6 @@ export const addGoal: ActionCreator<
       await firestore.collection("Goals").add({
         ...goal
       });
-
-      dispatch({
-        goal,
-        type: ADD_GOAL
-      });
     } catch (err) {
       console.error(err);
     }
@@ -33,8 +22,8 @@ export const addGoal: ActionCreator<
 };
 
 export const removeGoal: ActionCreator<
-  ThunkAction<Promise<any>, IGoal, null, GoalActionTypes>
-> = goal => {
+  ThunkAction<Promise<any>, string, null, Action>
+> = id => {
   return async (
     dispatch: Dispatch<Action>,
     getState: any,
@@ -42,14 +31,10 @@ export const removeGoal: ActionCreator<
   ) => {
     try {
       const firestore = getFirestore();
-      await firestore.collection("Goals").remove({
-        ...goal
-      });
-
-      dispatch({
-        goal,
-        type: ADD_GOAL
-      });
+      await firestore
+        .collection("Goals")
+        .doc(id)
+        .delete();
     } catch (err) {
       console.error(err);
     }

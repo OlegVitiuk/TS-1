@@ -8,30 +8,9 @@ export const AUTH_FAILED = "AUTH_FAILED";
 export const PAYMENT_SUCCESSFUL = "PAYMENT_SUCCESSFUL";
 export const PAYMENT_FAILED = "PAYMENT_FAILED";
 
-// creating goals
-export const ADD_GOAL = "ADD_GOAL";
-export const REMOVE_GOAL = "REMOVE_GOAL";
-export const GET_GOAL = "GET_GOAL";
-
 // authActions
 interface AuthSuccessfulAction {
   type: typeof AUTH_SUCCESSFUL;
 }
 
-// goals actions
-interface AddGoalAction {
-  type: typeof ADD_GOAL;
-  goal: IGoal;
-}
-
-interface RemoveGoalAction {
-  type: typeof REMOVE_GOAL;
-  id: string;
-}
-
-interface GetGoalAction {
-  type: typeof GET_GOAL;
-  goalsData: IGoal[];
-}
-
-export type GoalActionTypes = AddGoalAction | RemoveGoalAction | GetGoalAction;
+export type AuthActionTypes = AuthSuccessfulAction;
