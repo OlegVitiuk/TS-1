@@ -1,5 +1,3 @@
-import { Button, Checkbox, Form, Icon, Input } from "antd";
-import { FormComponentProps } from "antd/lib/form";
 import * as React from "react";
 import { connect } from "react-redux";
 import { AppState } from "store";

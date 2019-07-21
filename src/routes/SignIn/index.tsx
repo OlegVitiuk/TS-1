@@ -1,9 +1,10 @@
-import { Button, Checkbox, Form, Icon, Input } from "antd";
+import { Button, Form, Icon, Input } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import * as React from "react";
 import { connect } from "react-redux";
 import { AppState } from "store";
 import styles from "./signIn.module.scss";
+import { Link } from "react-router-dom";
 
 interface UserFormProps extends FormComponentProps {}
 
@@ -60,7 +61,7 @@ class SignIn extends React.Component<UserFormProps, any> {
             >
               Log in
             </Button>
-            Or <a href="">register now!</a>
+            Or <Link to="/sign-up">register now!</Link>
           </Form.Item>
         </Form>
       </div>

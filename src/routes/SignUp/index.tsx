@@ -1,5 +1,6 @@
-import { Button, Checkbox, Form, Icon, Input } from "antd";
+import { Button, Form, Icon, Input } from "antd";
 import { FormComponentProps } from "antd/lib/form";
+import { Link } from "react-router-dom";
 import * as React from "react";
 import { connect } from "react-redux";
 import { AppState } from "store";
@@ -76,9 +77,9 @@ class SignUp extends React.Component<UserFormProps, any> {
               htmlType="submit"
               className={styles.signInButton}
             >
-              Log in
+              Sign-up!
             </Button>
-            Or <a href="">register now!</a>
+            Already has a account? Login! <Link to="/sign-in">login!</Link>
           </Form.Item>
         </Form>
       </div>

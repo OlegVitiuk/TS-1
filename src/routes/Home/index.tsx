@@ -1,5 +1,5 @@
 import { addGoal, removeGoal } from "actions/goalActions";
-import { Icon, Input, List, Spin, Tag } from "antd";
+import { Icon, Input, Spin, Tag } from "antd";
 import { Action } from "redux";
 import * as React from "react";
 import { connect } from "react-redux";

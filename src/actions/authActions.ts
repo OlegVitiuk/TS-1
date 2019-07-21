@@ -1,49 +1,50 @@
-// Import redux types
-import { ActionCreator, Dispatch } from "redux";
+import { Action, ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
+import { IGoal } from "types/goal";
+import { useFirebase } from "react-redux-firebase";
+import { LOGIN_SUCCESS, LOGIN_FAILED } from "types/actions";
 
-// Import Auth Typing
-import { IAuthState } from "../reducers/authReducer";
+export const signIn: ActionCreator<
+  ThunkAction<Promise<any>, IGoal, null, Action>
+> = creds => {
+  return async (
+    dispatch: Dispatch<Action>,
+    getState: any,
+    { useFirebase }: any
+  ) => {
+    try {
+      const firebase = useFirebase();
+      const { email, password } = creds;
 
-// Create Action Constants
-export enum AuthActionTypes {
-  AUTHENTICATION_SUCCESS = "AUTHENTICATION_SUCCESS",
-  AUTHENTICATION_FAILURE = "AUTHENTICATION_FAILURE"
-}
+      await firebase.auth.signInWithEmailAndPassword(email, password);
+      dispatch({
+        type: LOGIN_SUCCESS
+      });
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAILED,
+        err
+      });
+    }
+  };
+};
 
-// Interface for Get All Action Type
-// export interface IAuthGetAllAction {
-//   type: AuthActionTypes.AUTHENTICATION_SUCCESS;
-//   characters: ICharacter[];
-// }
-
-/* 
-Combine the action types with a union (we assume there are more)
-example: export type CharacterActions = IGetAllAction | IGetOneAction ... 
-*/
-// export type CharacterActions = ICharacterGetAllAction;
-
-// /* Get All Action
-// <Promise<Return Type>, State Interface, Type of Param, Type of Action> */
-// export const getAllCharacters: ActionCreator<
-//   ThunkAction<Promise<any>, ICharacterState, null, ICharacterGetAllAction>
-// > = () => {
-//   return async (dispatch: Dispatch) => {
+// export const signOut: ActionCreator<
+//   ThunkAction<Promise<any>, string, null, Action>
+// > = id => {
+//   return async (
+//     dispatch: Dispatch<Action>,
+//     getState: any,
+//     { getFirestore }: any
+//   ) => {
 //     try {
-//       const response = await axios.get("https://swapi.co/api/people/");
-//       dispatch({
-//         characters: response.data.results,
-//         type: CharacterActionTypes.GET_ALL
-//       });
+//       const firestore = getFirestore();
+//       await firestore
+//         .collection("Goals")
+//         .doc(id)
+//         .delete();
 //     } catch (err) {
 //       console.error(err);
 //     }
 //   };
 // };
-
-// Interface for Get All Action Type
-export interface IAuthGetAllAction {
-  type: AuthActionTypes.AUTHENTICATION_SUCCESS;
-}
-
-export type AuthActions = IAuthGetAllAction;

@@ -1,31 +1,29 @@
-// Import Reducer type
-import { AuthActions, AuthActionTypes } from "actions/authActions";
+import { AuthActionTypes, LOGIN_SUCCESS, LOGIN_FAILED } from "types/actions";
 import { Reducer } from "redux";
 
-// Define the AuthState type
 export interface IAuthState {
-  readonly isAuthenticated: boolean;
-  readonly token: string;
-  readonly errorMessage: string;
+  readonly authError: string;
 }
 
-// Define the initial state
-const initialCharacterState: IAuthState = {
-  errorMessage: "",
-  isAuthenticated: false,
-  token: ""
+const initialState: IAuthState = {
+  authError: ""
 };
 
-export const authReducer: Reducer<IAuthState, AuthActions> = (
-  state = initialCharacterState,
+export const authReducer: Reducer<IAuthState, AuthActionTypes> = (
+  state = initialState,
   action
 ) => {
   switch (action.type) {
-    case AuthActionTypes.AUTHENTICATION_SUCCESS: {
+    case LOGIN_SUCCESS: {
       return {
         ...state,
-        isAuthenticated: true,
-        token: "asfdas"
+        authError: ""
+      };
+    }
+    case LOGIN_FAILED: {
+      return {
+        ...state,
+        authError: "login failed"
       };
     }
     default:

@@ -1,5 +1,5 @@
 import firebase from "config/fbConfig";
-import { useFirebase } from "react-redux-firebase";
+import { useFirebase, firebaseReducer } from "react-redux-firebase";
 import { authReducer } from "reducers/authReducer";
 import {
   applyMiddleware,
@@ -19,7 +19,8 @@ import thunk from "redux-thunk";
 // Create the root reducer
 const rootReducer = combineReducers({
   auth: authReducer,
-  firestore: firestoreReducer
+  firestore: firestoreReducer,
+  firebase: firebaseReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
