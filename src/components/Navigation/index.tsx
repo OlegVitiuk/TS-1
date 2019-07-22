@@ -3,70 +3,99 @@ import styles from "./navigation.module.scss";
 import { NavLink } from "react-router-dom";
 import { Menu, Icon } from "antd";
 import { ClickParam } from "antd/lib/menu";
+import { connect } from "react-redux";
+import { bindActionCreators, Action } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "store";
+import { signOut } from "actions/authActions";
 
-interface NavigationProps {}
+interface NavigationProps {
+  isLoggedIn: boolean;
+}
 
 interface NavigationState {}
 
-type Props = NavigationProps;
+interface LinkDispatchProps {
+  signOut: () => void;
+}
+
+interface LinkStateProps {
+  isLoggedIn: boolean;
+}
+
+type Props = NavigationProps & LinkDispatchProps;
 type State = NavigationState;
 
 class Navigation extends React.Component<Props, State> {
   state = {
-    current: ""
+    current: "home"
   };
-  handleClick = (e: ClickParam) => {
+  handleClick = (e: ClickParam): void => {
     this.setState(() => ({
       current: e.key
     }));
   };
 
-  public componentDidMount() {
-    this.setState({
-      current: window.location.pathname.slice(1)
-    });
+  public componentDidUpdate(prevProps: Props) {
+    const { isLoggedIn } = this.props;
+
+    if (prevProps.isLoggedIn !== isLoggedIn) {
+      this.setState({
+        current: "home"
+      });
+    }
   }
 
+  public logout = (): void => {
+    const { signOut } = this.props;
+
+    signOut();
+  };
+
   public render() {
-    return (
-      <Menu
-        onClick={this.handleClick}
-        selectedKeys={[this.state.current]}
-        mode="horizontal"
-      >
-        <Menu.Item key="home">
-          <div className={styles.menuItem}>
-            <Icon type="home" />
-            <NavLink to="/home">Home</NavLink>
-          </div>
-        </Menu.Item>
-        <Menu.Item key="pay" className={styles.menuItem}>
-          <div className={styles.menuItem}>
-            <Icon type="dollar" />
-            <NavLink to="/pay">Pay</NavLink>
-          </div>
-        </Menu.Item>
-        {/* <Menu.Item key="signIn" className={styles.menuItem}>
-          <div className={styles.menuItem}>
-            <Icon type="login" />
-            <NavLink to="/sign-in">Sign In</NavLink>
-          </div>
-        </Menu.Item>
-        <Menu.Item key="signUp" className={styles.menuItem}>
-          <div className={styles.menuItem}>
-            <Icon type="user-add" />
-            <NavLink to="/sign-up">Sign Up</NavLink>
-          </div>
-        </Menu.Item> */}
-        <Menu.Item key="logout" className={styles.menuItem}>
-          <div className={styles.menuItem}>
-            <Icon type="logout" />
-            <NavLink to="/sign-in">Log Out</NavLink>
-          </div>
-        </Menu.Item>
-      </Menu>
-    );
+    const { isLoggedIn } = this.props;
+
+    if (isLoggedIn) {
+      return (
+        <Menu
+          onClick={this.handleClick}
+          selectedKeys={[this.state.current]}
+          mode="horizontal"
+        >
+          <Menu.Item key="home">
+            <div className={styles.menuItem}>
+              <Icon type="home" />
+              <NavLink to="/">Home</NavLink>
+            </div>
+          </Menu.Item>
+          <Menu.Item key="pay" className={styles.menuItem}>
+            <div className={styles.menuItem}>
+              <Icon type="dollar" />
+              <NavLink to="/pay">Pay</NavLink>
+            </div>
+          </Menu.Item>
+          <Menu.Item
+            key="logout"
+            className={styles.menuItem}
+            onClick={this.logout}
+          >
+            <div className={styles.menuItem}>
+              <Icon type="logout" />
+              <NavLink to="/sign-in">Log Out</NavLink>
+            </div>
+          </Menu.Item>
+        </Menu>
+      );
+    }
+    return null;
   }
 }
 
-export default Navigation;
+export default connect(
+  (state: AppState): LinkStateProps => ({
+    isLoggedIn: state.firebase.auth.uid
+  }),
+  (dispatch: ThunkDispatch<any, any, Action>): LinkDispatchProps => ({
+    signOut: bindActionCreators(signOut, dispatch)
+  })
+)(Navigation);

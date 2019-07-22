@@ -1,9 +1,7 @@
-import firebase from "config/fbConfig";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { Store } from "redux";
-import { createFirestoreInstance } from "redux-firestore";
 
 import configureStore, { AppState } from "store";
 

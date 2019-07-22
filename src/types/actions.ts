@@ -1,6 +1,7 @@
 // authentication
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
+export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 
 // pay
 export const PAYMENT_SUCCESSFUL = "PAYMENT_SUCCESSFUL";
@@ -13,7 +14,16 @@ interface LoginSuccessAction {
 
 interface LoginFailedAction {
   type: typeof LOGIN_FAILED;
-  err: string;
+  err: {
+    message: string;
+  };
 }
 
-export type AuthActionTypes = LoginSuccessAction | LoginFailedAction;
+interface SignOutSuccessAction {
+  type: typeof SIGN_OUT_SUCCESS;
+}
+
+export type AuthActionTypes =
+  | LoginSuccessAction
+  | LoginFailedAction
+  | SignOutSuccessAction;

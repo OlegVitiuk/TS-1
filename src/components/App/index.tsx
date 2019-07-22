@@ -6,16 +6,17 @@ import Pay from "routes/Pay";
 import SignIn from "routes/SignIn";
 import SignUp from "routes/SignUp";
 import styles from "./app.module.scss";
+import ProtectedRoute from "routes/ProtectedRoute";
 
 const App: React.SFC = () => {
   return (
     <div className={styles.appContainer}>
       <Router>
         <Navigation />
-        <Route exact={true} path="/" component={SignIn} />
+        <ProtectedRoute path="/" component={Home} exact={true} />
+        <Route exact={true} path="/sign-in" component={SignIn} />
         <Route exact={true} path="/sign-up" component={SignUp} />
-        <Route exact={true} path="/home" component={Home} />
-        <Route exact={true} path="/pay" component={Pay} />
+        <ProtectedRoute path="/pay" component={Pay} />
       </Router>
     </div>
   );

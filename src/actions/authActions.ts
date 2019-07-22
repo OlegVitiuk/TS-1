@@ -1,10 +1,16 @@
 import { Action, ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { IGoal } from "types/goal";
-import { LOGIN_SUCCESS, LOGIN_FAILED } from "types/actions";
+import { credsType } from "types/auth";
+import { Redirect } from "react-router";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  SIGN_OUT_SUCCESS,
+  AuthActionTypes
+} from "types/actions";
 
 export const signIn: ActionCreator<
-  ThunkAction<Promise<any>, IGoal, null, Action>
+  ThunkAction<Promise<any>, credsType, null, AuthActionTypes>
 > = creds => {
   return async (
     dispatch: Dispatch<Action>,
@@ -32,22 +38,23 @@ export const signIn: ActionCreator<
   };
 };
 
-// export const signOut: ActionCreator<
-//   ThunkAction<Promise<any>, string, null, Action>
-// > = id => {
-//   return async (
-//     dispatch: Dispatch<Action>,
-//     getState: any,
-//     { getFirestore }: any
-//   ) => {
-//     try {
-//       const firestore = getFirestore();
-//       await firestore
-//         .collection("Goals")
-//         .doc(id)
-//         .delete();
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
-// };
+export const signOut: ActionCreator<
+  ThunkAction<Promise<any>, undefined, null, AuthActionTypes>
+> = () => {
+  return async (
+    dispatch: Dispatch<Action>,
+    getState: any,
+    { getFirebase }: any
+  ) => {
+    try {
+      const firebase = getFirebase();
+
+      await firebase.auth().signOut();
+      dispatch({
+        type: SIGN_OUT_SUCCESS
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};
