@@ -98,6 +98,7 @@ class Navigation extends React.Component<Props, State> {
         </Menu>
       );
     }
+
     return null;
   }
 }
