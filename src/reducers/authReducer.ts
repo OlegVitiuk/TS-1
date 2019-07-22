@@ -2,7 +2,9 @@ import {
   AuthActionTypes,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  SIGN_OUT_SUCCESS
+  SIGN_OUT_SUCCESS,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE
 } from "types/actions";
 import { Reducer } from "redux";
 
@@ -34,6 +36,20 @@ export const authReducer: Reducer<IAuthState, AuthActionTypes> = (
 
     case SIGN_OUT_SUCCESS: {
       console.log("sign out!");
+      return state;
+    }
+
+    case SIGN_UP_SUCCESS: {
+      console.log("sign up success!");
+      return { ...state, authError: "" };
+    }
+
+    case SIGN_UP_FAILURE: {
+      console.log("sign up failure!");
+      return {
+        ...state,
+        authError: action.err.message
+      };
     }
     default:
       return state;

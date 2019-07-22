@@ -1,13 +1,15 @@
 import { Action, ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { credsType } from "types/auth";
-import { Redirect } from "react-router";
 import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  SIGN_UP_FAILURE,
+  SIGN_UP_SUCCESS,
   SIGN_OUT_SUCCESS,
   AuthActionTypes
 } from "types/actions";
+import { signUpData } from "types/signUp";
 
 export const signIn: ActionCreator<
   ThunkAction<Promise<any>, credsType, null, AuthActionTypes>
@@ -55,6 +57,44 @@ export const signOut: ActionCreator<
       });
     } catch (err) {
       console.error(err);
+    }
+  };
+};
+
+export const signUp: ActionCreator<
+  ThunkAction<Promise<any>, signUpData, null, AuthActionTypes>
+> = user => {
+  return async (
+    dispatch: Dispatch<Action>,
+    getState: any,
+    { getFirebase, getFirestore }: any
+  ) => {
+    try {
+      const firebase = getFirebase();
+      const firestore = getFirestore();
+      const { email, password, firstName, lastName } = user;
+
+      const res = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+
+      await firestore
+        .collection("Users")
+        .doc(res.user.uid)
+        .set({
+          firstName,
+          lastName
+        });
+
+      dispatch({
+        type: SIGN_UP_SUCCESS
+      });
+    } catch (err) {
+      console.error(err);
+      dispatch({
+        type: SIGN_UP_FAILURE,
+        err
+      });
     }
   };
 };

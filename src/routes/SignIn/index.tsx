@@ -1,4 +1,4 @@
-import { Button, Form, Icon, Input, message } from "antd";
+import { Button, Form, Icon, Input } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -98,7 +98,7 @@ class SignIn extends React.Component<Props, State> {
               >
                 Log in
               </Button>
-              Or <Link to="/sign-up">register now!</Link>
+              Or <Link to="/sign-up">Register now!</Link>
             </Form.Item>
           </Form>
         </div>
