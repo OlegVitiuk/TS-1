@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component render App component 1`] = `ShallowWrapper {}`;
+
+exports[`SignIn component render App component 1`] = `ShallowWrapper {}`;
+
+exports[`render App component 1`] = `ShallowWrapper {}`;
+
+exports[`renders without crashing 1`] = `ShallowWrapper {}`;

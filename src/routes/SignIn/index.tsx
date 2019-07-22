@@ -1,14 +1,14 @@
+import { signIn } from "actions/authActions";
 import { Button, Form, Icon, Input } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import * as React from "react";
 import { connect } from "react-redux";
-import { AppState } from "store";
-import styles from "./signIn.module.scss";
 import { Link, Redirect } from "react-router-dom";
-import { signIn } from "actions/authActions";
-import { bindActionCreators, Action } from "redux";
+import { Action, bindActionCreators } from "redux";
 import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "store";
 import { credsType } from "types/auth";
+import styles from "./signIn.module.scss";
 
 interface UserFormProps extends FormComponentProps {}
 
@@ -72,7 +72,7 @@ class SignIn extends React.Component<Props, State> {
                 />
               )}
             </Form.Item>
-            <Form.Item hasFeedback>
+            <Form.Item hasFeedback={true}>
               {getFieldDecorator("password", {
                 rules: [
                   { required: true, message: "Please input your Password!" }
