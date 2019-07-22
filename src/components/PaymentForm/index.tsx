@@ -1,36 +1,51 @@
+import { pay } from "actions/paymentActions";
 import axios from "axios";
 import * as React from "react";
+import { connect } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
-import { toast } from "react-toastify";
+import { bindActionCreators } from "redux";
+import { Action } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 
-import "react-toastify/dist/ReactToastify.css";
+interface LinkDispatchProps {
+  pay: (goalId: string) => void;
+}
 
-interface NavigationProps {}
+interface PaymentFormProps {
+  goalId: string;
+  goalName: string;
+}
 
-interface NavigationState {}
+type Props = LinkDispatchProps & PaymentFormProps;
 
-const data = {
-  name: "goal ff",
-  price: 100 * 100,
-  description: "Cool car"
-};
+interface PaymentState {}
 
-class PaymentForm extends React.Component<NavigationProps, NavigationState> {
+class PaymentForm extends React.Component<Props, PaymentState> {
+  private publicStrapiKey = "pk_test_hHVCjlpDhyjqd85J9wTRyslE00lIxUPRR0";
+
   public handleToken = (token: any): void => {
+    const { pay, goalId, goalName } = this.props;
+
+    const defaultGoalPrice = 100 * 100;
+    const paymentData = {
+      name: goalName,
+      price: defaultGoalPrice
+    };
+
     console.log(token, "token");
     axios
       .post("http://localhost:8080/checkout", {
         token,
-        data
+        data: paymentData
       })
       .then(res => {
         const { status } = res.data;
         console.log("Response:", res.data);
 
         if (status === "success") {
-          toast("Payment has sent successfully", { type: "success" });
+          pay(goalId);
         } else {
-          toast("Something went wrong", { type: "error" });
+          console.error("something happened");
         }
       });
   };
@@ -38,9 +53,9 @@ class PaymentForm extends React.Component<NavigationProps, NavigationState> {
   public render() {
     return (
       <StripeCheckout
-        stripeKey="pk_test_hHVCjlpDhyjqd85J9wTRyslE00lIxUPRR0"
+        stripeKey={this.publicStrapiKey}
         token={this.handleToken}
-        amount={100}
+        amount={100 * 100}
         name="GOAL"
         billingAddress={true}
         shippingAddress={true}
@@ -49,4 +64,9 @@ class PaymentForm extends React.Component<NavigationProps, NavigationState> {
   }
 }
 
-export default PaymentForm;
+export default connect(
+  null,
+  (dispatch: ThunkDispatch<any, any, Action>): LinkDispatchProps => ({
+    pay: bindActionCreators(pay, dispatch)
+  })
+)(PaymentForm);

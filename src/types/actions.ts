@@ -5,10 +5,6 @@ export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 
-// pay
-export const PAYMENT_SUCCESSFUL = "PAYMENT_SUCCESSFUL";
-export const PAYMENT_FAILED = "PAYMENT_FAILED";
-
 // authActions
 interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;

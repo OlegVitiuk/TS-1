@@ -61,7 +61,14 @@ class Home extends React.Component<Props, State> {
                   <div className={styles.goalCard} key={goalId}>
                     <div className={styles.goalHeader}>
                       <span className={styles.goalName}>{goalData.name}</span>
-                      <Popover content={<PaymentForm />}>
+                      <Popover
+                        content={
+                          <PaymentForm
+                            goalId={goalId}
+                            goalName={goalData.name}
+                          />
+                        }
+                      >
                         <Tag
                           key={goalData.authorId}
                           color={goalData.paid ? "green" : "red"}
