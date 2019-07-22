@@ -1,3 +1,4 @@
+import PaymentForm from "components/PaymentForm";
 import * as React from "react";
 import { connect } from "react-redux";
 import { AppState } from "store";
@@ -9,7 +10,11 @@ interface IState {}
 
 class Pay extends React.Component<IProps, IState> {
   public render() {
-    return <div>Pay PAGE</div>;
+    return (
+      <div>
+        <PaymentForm />
+      </div>
+    );
   }
 }
 
