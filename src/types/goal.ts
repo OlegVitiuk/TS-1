@@ -2,7 +2,7 @@ export interface IGoal {
   name: string;
   paid: boolean;
   price: number;
-  id: string;
+  authorId: string;
 }
 
 export interface IGoalState {

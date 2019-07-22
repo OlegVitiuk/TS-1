@@ -1,0 +1,21 @@
+.signUpForm {
+  width: 350px;
+  margin-top: 5%;
+  text-align: center;
+}
+
+.signUpButton {
+  width: 100%;
+}
+
+.signUpWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorMessage {
+  color: red;
+  font-family: "Inconsolata";
+  font-size: 12px;
+}

@@ -8,7 +8,6 @@ import { bindActionCreators, compose } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "store";
 import { IGoal } from "types/goal";
-import uuidv4 from "uuid/v4";
 import styles from "./home.module.scss";
 import { IGoalState } from "types/goal";
 
@@ -16,12 +15,14 @@ const { Search } = Input;
 
 interface HomePageProps {
   goalsData: IGoalState;
+  authorId: string;
 }
 
 interface HomePageState {}
 
 interface LinkStateProps {
   goalsData: IGoalState;
+  authorId: string;
 }
 
 interface LinkDispatchProps {
@@ -51,7 +52,7 @@ class Home extends React.Component<Props, State> {
           />
         </div>
         <div className={styles.goalsContainer}>
-          {goalsData ? (
+          {goalsData &&
             goalsIds.map(goalId => {
               const goalData = goalsData[goalId];
               if (goalData) {
@@ -60,7 +61,7 @@ class Home extends React.Component<Props, State> {
                     <div className={styles.goalHeader}>
                       <span className={styles.goalName}>{goalData.name}</span>
                       <Tag
-                        key={goalData.id + 1}
+                        key={goalData.authorId}
                         color={goalData.paid ? "green" : "red"}
                       >
                         {goalData.paid ? "paid" : "not paid"}
@@ -76,23 +77,21 @@ class Home extends React.Component<Props, State> {
                 );
               }
               return null;
-            })
-          ) : (
-            <Spin size="large" />
-          )}
+            })}
+          {!goalsData && <span className={styles.noData}>No data</span>}
         </div>
       </div>
     );
   }
 
   private processGoal = (value: string): void => {
-    const { addGoal } = this.props;
+    const { addGoal, authorId } = this.props;
 
     addGoal({
       name: value,
       paid: false,
       price: 100,
-      id: uuidv4()
+      authorId
     });
   };
 
@@ -106,12 +105,17 @@ class Home extends React.Component<Props, State> {
 export default compose<any>(
   connect(
     (state: AppState): LinkStateProps => ({
-      goalsData: state.firestore.data.Goals
+      goalsData: state.firestore.data.Goals,
+      authorId: state.firebase.auth.uid
     }),
     (dispatch: ThunkDispatch<any, any, Action>): LinkDispatchProps => ({
       addGoal: bindActionCreators(addGoal, dispatch),
       removeGoal: bindActionCreators(removeGoal, dispatch)
     })
   ),
-  firestoreConnect([{ collection: "Goals" }])
+  firestoreConnect((props: any) => {
+    return [
+      { collection: "Goals", where: [["authorId", "==", props.authorId]] }
+    ];
+  })
 )(Home);

@@ -1,4 +1,11 @@
-import { AuthActionTypes, LOGIN_SUCCESS, LOGIN_FAILED } from "types/actions";
+import {
+  AuthActionTypes,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  SIGN_OUT_SUCCESS,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE
+} from "types/actions";
 import { Reducer } from "redux";
 
 export interface IAuthState {
@@ -23,7 +30,25 @@ export const authReducer: Reducer<IAuthState, AuthActionTypes> = (
     case LOGIN_FAILED: {
       return {
         ...state,
-        authError: "login failed"
+        authError: action.err.message
+      };
+    }
+
+    case SIGN_OUT_SUCCESS: {
+      console.log("sign out!");
+      return state;
+    }
+
+    case SIGN_UP_SUCCESS: {
+      console.log("sign up success!");
+      return { ...state, authError: "" };
+    }
+
+    case SIGN_UP_FAILURE: {
+      console.log("sign up failure!");
+      return {
+        ...state,
+        authError: action.err.message
       };
     }
     default:

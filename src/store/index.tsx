@@ -1,6 +1,7 @@
 import firebase from "config/fbConfig";
-import { useFirebase, firebaseReducer } from "react-redux-firebase";
+import { getFirebase, firebaseReducer } from "react-redux-firebase";
 import { authReducer } from "reducers/authReducer";
+import { reactReduxFirebase } from "react-redux-firebase";
 import {
   applyMiddleware,
   combineReducers,
@@ -31,8 +32,12 @@ export default function configureStore(): Store<AppState> {
     undefined,
     compose(
       composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument({ useFirebase, getFirestore })),
-        reduxFirestore(firebase)
+        applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
+        reduxFirestore(firebase),
+        reactReduxFirebase(firebase, {
+          useFirestoreForProfile: true,
+          userProfile: "Users"
+        })
       )
     )
   );
