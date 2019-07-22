@@ -61,21 +61,7 @@ class Home extends React.Component<Props, State> {
                   <div className={styles.goalCard} key={goalId}>
                     <div className={styles.goalHeader}>
                       <span className={styles.goalName}>{goalData.name}</span>
-                      <Popover
-                        content={
-                          <PaymentForm
-                            goalId={goalId}
-                            goalName={goalData.name}
-                          />
-                        }
-                      >
-                        <Tag
-                          key={goalData.authorId}
-                          color={goalData.paid ? "green" : "red"}
-                        >
-                          {goalData.paid ? "paid" : "not paid"}
-                        </Tag>
-                      </Popover>
+                      {this.renderPaidTag(goalData, goalId)}
                       <Icon
                         type="delete"
                         onClick={() => this.deleteGoal(goalId)}
@@ -93,6 +79,24 @@ class Home extends React.Component<Props, State> {
       </div>
     );
   }
+  private renderPaidTag = (goalData: IGoal, goalId: string) => {
+    const { authorId, name, paid } = goalData;
+
+    if (paid) {
+      return (
+        <Tag key={authorId} color="green">
+          paid
+        </Tag>
+      );
+    }
+    return (
+      <Popover content={<PaymentForm goalId={goalId} goalName={name} />}>
+        <Tag key={authorId} color="red">
+          not paid
+        </Tag>
+      </Popover>
+    );
+  };
 
   private processGoal = (value: string): void => {
     const { addGoal, authorId } = this.props;
