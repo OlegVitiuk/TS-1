@@ -52,7 +52,7 @@ class Home extends React.Component<Props, State> {
           />
         </div>
         <div className={styles.goalsContainer}>
-          {goalsData ? (
+          {goalsData &&
             goalsIds.map(goalId => {
               const goalData = goalsData[goalId];
               if (goalData) {
@@ -77,10 +77,8 @@ class Home extends React.Component<Props, State> {
                 );
               }
               return null;
-            })
-          ) : (
-            <Spin size="large" />
-          )}
+            })}
+          {!goalsData && <span className={styles.noData}>No data</span>}
         </div>
       </div>
     );
