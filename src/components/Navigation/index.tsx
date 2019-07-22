@@ -1,13 +1,13 @@
-import * as React from "react";
-import styles from "./navigation.module.scss";
-import { NavLink } from "react-router-dom";
-import { Menu, Icon } from "antd";
+import { signOut } from "actions/authActions";
+import { Icon, Menu } from "antd";
 import { ClickParam } from "antd/lib/menu";
+import * as React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators, Action } from "redux";
+import { NavLink } from "react-router-dom";
+import { Action, bindActionCreators } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "store";
-import { signOut } from "actions/authActions";
+import styles from "./navigation.module.scss";
 
 interface NavigationProps {
   isLoggedIn: boolean;
@@ -29,10 +29,10 @@ type Props = NavigationProps & LinkDispatchProps;
 type State = NavigationState;
 
 class Navigation extends React.Component<Props, State> {
-  state = {
+  public state = {
     current: "home"
   };
-  handleClick = (e: ClickParam): void => {
+  public handleClick = (e: ClickParam): void => {
     this.setState(() => ({
       current: e.key
     }));
@@ -71,12 +71,6 @@ class Navigation extends React.Component<Props, State> {
             <div className={styles.menuItem}>
               <Icon type="home" />
               <NavLink to="/">Home</NavLink>
-            </div>
-          </Menu.Item>
-          <Menu.Item key="pay" className={styles.menuItem}>
-            <div className={styles.menuItem}>
-              <Icon type="dollar" />
-              <NavLink to="/pay">Pay</NavLink>
             </div>
           </Menu.Item>
           <Menu.Item
