@@ -1,15 +1,16 @@
 import { addGoal, removeGoal } from "actions/goalActions";
-import { Icon, Input, Spin, Tag } from "antd";
-import { Action } from "redux";
+import { Icon, Input, Popover, Tag } from "antd";
+import PaymentForm from "components/PaymentForm";
 import * as React from "react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { bindActionCreators, compose } from "redux";
+import { Action } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "store";
 import { IGoal } from "types/goal";
-import styles from "./home.module.scss";
 import { IGoalState } from "types/goal";
+import styles from "./home.module.scss";
 
 const { Search } = Input;
 
@@ -60,12 +61,14 @@ class Home extends React.Component<Props, State> {
                   <div className={styles.goalCard} key={goalId}>
                     <div className={styles.goalHeader}>
                       <span className={styles.goalName}>{goalData.name}</span>
-                      <Tag
-                        key={goalData.authorId}
-                        color={goalData.paid ? "green" : "red"}
-                      >
-                        {goalData.paid ? "paid" : "not paid"}
-                      </Tag>
+                      <Popover content={<PaymentForm />}>
+                        <Tag
+                          key={goalData.authorId}
+                          color={goalData.paid ? "green" : "red"}
+                        >
+                          {goalData.paid ? "paid" : "not paid"}
+                        </Tag>
+                      </Popover>
                       <Icon
                         type="delete"
                         onClick={() => this.deleteGoal(goalId)}
