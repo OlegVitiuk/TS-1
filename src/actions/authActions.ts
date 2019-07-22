@@ -83,7 +83,8 @@ export const signUp: ActionCreator<
         .doc(res.user.uid)
         .set({
           firstName,
-          lastName
+          lastName,
+          initials: firstName[0] + lastName[0]
         });
 
       dispatch({

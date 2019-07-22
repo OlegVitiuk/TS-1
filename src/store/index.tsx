@@ -34,7 +34,10 @@ export default function configureStore(): Store<AppState> {
       composeWithDevTools(
         applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
         reduxFirestore(firebase),
-        reactReduxFirebase(firebase, {})
+        reactReduxFirebase(firebase, {
+          useFirestoreForProfile: true,
+          userProfile: "Users"
+        })
       )
     )
   );

@@ -11,6 +11,7 @@ import { signOut } from "actions/authActions";
 
 interface NavigationProps {
   isLoggedIn: boolean;
+  userLogo: string;
 }
 
 interface NavigationState {}
@@ -21,6 +22,7 @@ interface LinkDispatchProps {
 
 interface LinkStateProps {
   isLoggedIn: boolean;
+  userLogo: string;
 }
 
 type Props = NavigationProps & LinkDispatchProps;
@@ -53,7 +55,9 @@ class Navigation extends React.Component<Props, State> {
   };
 
   public render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, userLogo } = this.props;
+    const randomColorForUserLogo =
+      "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6);
 
     if (isLoggedIn) {
       return (
@@ -61,6 +65,7 @@ class Navigation extends React.Component<Props, State> {
           onClick={this.handleClick}
           selectedKeys={[this.state.current]}
           mode="horizontal"
+          className={styles.menu}
         >
           <Menu.Item key="home">
             <div className={styles.menuItem}>
@@ -84,6 +89,12 @@ class Navigation extends React.Component<Props, State> {
               <NavLink to="/sign-in">Log Out</NavLink>
             </div>
           </Menu.Item>
+          <div
+            className={styles.userLogo}
+            style={{ backgroundColor: randomColorForUserLogo }}
+          >
+            {userLogo}
+          </div>
         </Menu>
       );
     }
@@ -93,7 +104,8 @@ class Navigation extends React.Component<Props, State> {
 
 export default connect(
   (state: AppState): LinkStateProps => ({
-    isLoggedIn: state.firebase.auth.uid
+    isLoggedIn: state.firebase.auth.uid,
+    userLogo: state.firebase.profile.initials
   }),
   (dispatch: ThunkDispatch<any, any, Action>): LinkDispatchProps => ({
     signOut: bindActionCreators(signOut, dispatch)
