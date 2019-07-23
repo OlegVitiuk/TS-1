@@ -61,35 +61,38 @@ class Navigation extends React.Component<Props, State> {
 
     if (isLoggedIn) {
       return (
-        <Menu
-          onClick={this.handleClick}
-          selectedKeys={[this.state.current]}
-          mode="horizontal"
-          className={styles.menu}
-        >
-          <Menu.Item key="home">
-            <div className={styles.menuItem}>
-              <Icon type="home" />
-              <NavLink to="/">Home</NavLink>
-            </div>
-          </Menu.Item>
-          <Menu.Item
-            key="logout"
-            className={styles.menuItem}
-            onClick={this.logout}
+        <div data-test="navigation">
+          <Menu
+            onClick={this.handleClick}
+            selectedKeys={[this.state.current]}
+            mode="horizontal"
+            className={styles.menu}
+            data-test="menu"
           >
-            <div className={styles.menuItem}>
-              <Icon type="logout" />
-              <NavLink to="/sign-in">Log Out</NavLink>
+            <Menu.Item key="home">
+              <div className={styles.menuItem}>
+                <Icon type="home" />
+                <NavLink to="/">Home</NavLink>
+              </div>
+            </Menu.Item>
+            <Menu.Item
+              key="logout"
+              className={styles.menuItem}
+              onClick={this.logout}
+            >
+              <div className={styles.menuItem}>
+                <Icon type="logout" />
+                <NavLink to="/sign-in">Log Out</NavLink>
+              </div>
+            </Menu.Item>
+            <div
+              className={styles.userLogo}
+              style={{ backgroundColor: randomColorForUserLogo }}
+            >
+              {userLogo}
             </div>
-          </Menu.Item>
-          <div
-            className={styles.userLogo}
-            style={{ backgroundColor: randomColorForUserLogo }}
-          >
-            {userLogo}
-          </div>
-        </Menu>
+          </Menu>
+        </div>
       );
     }
 

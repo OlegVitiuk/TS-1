@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Payment form should render Payment form 1`] = `ShallowWrapper {}`;

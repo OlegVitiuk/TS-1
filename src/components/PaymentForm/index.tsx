@@ -32,7 +32,7 @@ class PaymentForm extends React.Component<Props, PaymentState> {
       price: defaultGoalPrice
     };
 
-    console.log(token, "token");
+    console.log("handle token");
     axios
       .post("http://localhost:8080/checkout", {
         token,
@@ -52,7 +52,7 @@ class PaymentForm extends React.Component<Props, PaymentState> {
 
   public render() {
     return (
-      <div data-test="paymentFormComponent">
+      <div data-test="paymentForm">
         <StripeCheckout
           stripeKey={this.publicStrapiKey}
           token={this.handleToken}

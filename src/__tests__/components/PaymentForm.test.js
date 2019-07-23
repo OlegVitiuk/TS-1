@@ -1,29 +1,41 @@
-import configureStore from "redux-mock-store";
-import { shallow } from "enzyme";
-import React from "react";
-import PaymentForm from "components/PaymentForm";
-import { findByTestAttribute } from "utils";
+import { shallow } from 'enzyme';
+import React from 'react';
+import PaymentForm from 'components/PaymentForm';
+import sinon from 'sinon';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
-// // create any initial state needed
-// const initialState = {};
-// // here it is possible to pass in any middleware if needed into //configureStore
-// const mockStore = configureStore();
+const store = configureStore([thunk])();
 
-// describe("Payment form", () => {
-//   let component;
-//   let store;
+let [pay] = new Array(1).fill(jest.fn());
 
-//   beforeEach(() => {
-//     //creates the store with any initial state or middleware needed
-//     store = mockStore(initialState);
-//     component = shallow(<PaymentForm store={store} />);
-//   });
+function shallowSetup() {
+  // Sample props to pass to our shallow render
+  const props = {
+    pay,
+    goalId: 'sdagdsg',
+    goalName: 'asfdasf'
+  };
+  // wrapper instance around rendered output
+  const enzymeWrapper = shallow(
+    <PaymentForm {...props} store={store} />
+  ).dive();
 
-//   it("Should render without errors", () => {
-//     const wrapper = findByTestAttribute(component, "paymentFormComponent");
+  return {
+    props,
+    enzymeWrapper
+  };
+}
 
-//     console.log(wrapper, "wrapper");
+describe('Payment form', () => {
+  it('should render Payment form', () => {
+    // Setup wrapper and assign props.
+    const { enzymeWrapper, props } = shallowSetup();
 
-//     expect(wrapper.length).toBe(1);
-//   });
-// });
+    expect(enzymeWrapper.exists()).toBe(true);
+    expect(enzymeWrapper).toMatchSnapshot();
+    expect(enzymeWrapper.find('div').prop('data-test')).toEqual('paymentForm');
+  });
+
+  it('should call handleToken', () => {});
+});
