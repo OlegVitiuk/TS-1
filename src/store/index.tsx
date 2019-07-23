@@ -18,7 +18,7 @@ import {
 import thunk from "redux-thunk";
 
 // Create the root reducer
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   auth: authReducer,
   firestore: firestoreReducer,
   firebase: firebaseReducer

@@ -52,14 +52,16 @@ class PaymentForm extends React.Component<Props, PaymentState> {
 
   public render() {
     return (
-      <StripeCheckout
-        stripeKey={this.publicStrapiKey}
-        token={this.handleToken}
-        amount={100 * 100}
-        name="GOAL"
-        billingAddress={true}
-        shippingAddress={true}
-      />
+      <div data-test="paymentFormComponent">
+        <StripeCheckout
+          stripeKey={this.publicStrapiKey}
+          token={this.handleToken}
+          amount={100 * 100}
+          name="GOAL"
+          billingAddress={true}
+          shippingAddress={true}
+        />
+      </div>
     );
   }
 }
